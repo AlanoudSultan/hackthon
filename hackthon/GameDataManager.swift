@@ -1,0 +1,119 @@
+//
+//  GameDataManager.swift
+//  hackthon
+//
+//  Created by Alanoud Abaalkhail on 30/07/2025.
+//
+
+import Foundation
+
+class GameDataManager: ObservableObject {
+    static let shared = GameDataManager()
+    
+    @Published var currentStage: Int = 0
+    @Published var currentMoney: Int = 0
+    @Published var totalSavings: Int = 0
+    @Published var totalInvestment: Int = 0
+    @Published var stages: [FinanceStage] = []
+    
+    private let userDefaults = UserDefaults.standard
+    private let currentStageKey = "currentStage"
+    private let currentMoneyKey = "currentMoney"
+    private let totalSavingsKey = "totalSavings"
+    private let totalInvestmentKey = "totalInvestment"
+    
+    private init() {
+        loadStages()
+        loadGameData()
+    }
+    
+    private func loadStages() {
+        guard let url = Bundle.main.url(forResource: "FinanceStages", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let stagesData = try? JSONDecoder().decode(FinanceStagesData.self, from: data) else {
+            // Fallback to hardcoded stages if JSON loading fails
+            stages = [
+                FinanceStage(name: "مبتدئ", averageDailyIncome: 50, saving: 10, investment: 5, goal: "ادخر حتى تصل إلى 100 قطعة لتطوير الكشك الأول."),
+                FinanceStage(name: "متوسط", averageDailyIncome: 150, saving: 30, investment: 30, goal: "قم بتوسيع الكشك وإضافة منتجات (500 قطعة)."),
+                FinanceStage(name: "متقدم", averageDailyIncome: 300, saving: 60, investment: 90, goal: "امتلك متجرًا كبيرًا في السوق (1000 قطعة).")
+            ]
+            return
+        }
+        stages = stagesData.stages
+    }
+    
+    private func loadGameData() {
+        currentStage = userDefaults.integer(forKey: currentStageKey)
+        currentMoney = userDefaults.integer(forKey: currentMoneyKey)
+        totalSavings = userDefaults.integer(forKey: totalSavingsKey)
+        totalInvestment = userDefaults.integer(forKey: totalInvestmentKey)
+        objectWillChange.send()
+    }
+    
+    func saveGameData() {
+        userDefaults.set(currentStage, forKey: currentStageKey)
+        userDefaults.set(currentMoney, forKey: currentMoneyKey)
+        userDefaults.set(totalSavings, forKey: totalSavingsKey)
+        userDefaults.set(totalInvestment, forKey: totalInvestmentKey)
+    }
+    
+    func getCurrentStage() -> FinanceStage? {
+        guard currentStage < stages.count else { return nil }
+        return stages[currentStage]
+    }
+    
+    func earnMoney(_ amount: Int) {
+        currentMoney += amount
+        saveGameData()
+        objectWillChange.send()
+    }
+    
+    func saveMoney(_ amount: Int) {
+        guard currentMoney >= amount else { return }
+        currentMoney -= amount
+        totalSavings += amount
+        saveGameData()
+        objectWillChange.send()
+    }
+    
+    func investMoney(_ amount: Int) {
+        guard currentMoney >= amount else { return }
+        currentMoney -= amount
+        totalInvestment += amount
+        saveGameData()
+        objectWillChange.send()
+    }
+    
+    func canAdvanceToNextStage() -> Bool {
+        guard let currentStageData = getCurrentStage() else { return false }
+        
+        switch currentStage {
+        case 0: // مبتدئ
+            return totalSavings >= 100
+        case 1: // متوسط
+            return currentMoney >= 500
+        case 2: // متقدم
+            return currentMoney >= 1000
+        default:
+            return false
+        }
+    }
+    
+    func advanceToNextStage() {
+        if canAdvanceToNextStage() && currentStage < stages.count - 1 {
+            currentStage += 1
+            saveGameData()
+            objectWillChange.send()
+        }
+    }
+    
+    func resetGame() {
+        currentStage = 0
+        currentMoney = 0
+        totalSavings = 0
+        totalInvestment = 0
+        saveGameData()
+        objectWillChange.send()
+    }
+    
+}

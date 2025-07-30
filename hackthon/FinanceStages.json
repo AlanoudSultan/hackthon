@@ -1,0 +1,25 @@
+{
+  "stages": [
+    {
+      "name": "مبتدئ",
+      "averageDailyIncome": 50,
+      "saving": 10,
+      "investment": 5,
+      "goal": "ادخر حتى تصل إلى 100 قطعة لتطوير الكشك الأول."
+    },
+    {
+      "name": "متوسط",
+      "averageDailyIncome": 150,
+      "saving": 30,
+      "investment": 30,
+      "goal": "قم بتوسيع الكشك وإضافة منتجات (500 قطعة)."
+    },
+    {
+      "name": "متقدم",
+      "averageDailyIncome": 300,
+      "saving": 60,
+      "investment": 90,
+      "goal": "امتلك متجرًا كبيرًا في السوق (1000 قطعة)."
+    }
+  ]
+} 
