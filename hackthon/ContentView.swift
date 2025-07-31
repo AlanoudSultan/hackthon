@@ -17,7 +17,51 @@ struct ContentView: View {
                     .ignoresSafeArea()
                 
                 VStack {
+                    HStack {
+                        Text("١")
+                            .foregroundColor(Color("yellow"))
+                            .font(.custom("SFArabicRounded", size: 36))
+                            .fontWeight(.heavy)
+                        
+                        Image(systemName: "star.fill")
+                            .foregroundColor(Color("yellow"))
+                            .font(.title)
+                            .fontWeight(.heavy)
+                        
+                        ZStack {
+                            // Background rectangle (unfilled)
+                            Rectangle()
+                                .fill(Color.yellow.opacity(0.17))
+                                .stroke(Color("yellow"), lineWidth: 4)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .frame(width: 90, height: 12)
+                            
+                            // Progress rectangle (filled) on top
+                            Rectangle()
+                                .fill(Color("yellow"))
+                                .frame(width: 40, height: 8)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .padding(.trailing, 50)
+                        }
+                        Spacer()
+                           
+                        
+                        Image(systemName: "gift.circle.fill")
+                            .foregroundColor(Color("red"))
+                            .font(.system(size: 50))
+                            .fontWeight(.heavy)
+                            .overlay(
+                                Circle()
+                                    .stroke(Color("BackgroundColor"), lineWidth: 3)
+                            )
+                            .padding(.trailing, 90)
+        
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    
                     Spacer()
+                    
                     Button(action: {
                         // Button action here
                     }) {
@@ -33,8 +77,8 @@ struct ContentView: View {
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
-                    .padding(.bottom, 10)
-                    .padding(.trailing, 70)
+                    .padding(.bottom, 20)
+                    .padding(.trailing, 90)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
