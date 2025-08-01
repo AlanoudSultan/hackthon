@@ -129,7 +129,7 @@ struct CarpetShop: View {
                     Image("girl")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 110)
+                        .frame(width: 90)
                         .shadow(radius: 10)
                         .padding(.trailing, 50)
                 }

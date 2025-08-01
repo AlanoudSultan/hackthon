@@ -130,7 +130,7 @@ struct PotteryShop: View {
                     Image("boy")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 110)
+                        .frame(width: 95)
                         .shadow(radius: 10)
                         .padding(.trailing, 50)
                 }
