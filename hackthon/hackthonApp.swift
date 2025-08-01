@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct hackthonApp: App {
+    @StateObject private var gameData = GameDataManager.shared
+    
     var body: some Scene {
         WindowGroup {
-            SplashScreen()
+            NavigationView {
+                SplashScreen()
+            }
         }
     }
 }

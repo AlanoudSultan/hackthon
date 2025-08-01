@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+
 struct story: View {
     @State private var currentScene = 0
+    @State private var showContentView = false
 
     let scenes = [
         "قبل زمن... في أحد الأسواق الشعبية، كان جدي يحلم بأن يصبح تاجرًا معروفًا، ولكن للأسف أصبح الأمر شاقًا عليه خاصةً مع تقدم العمر.",
@@ -69,7 +71,9 @@ struct story: View {
                                 if currentScene < scenes.count - 1 {
                                     currentScene += 1
                                 } else {
-                                    // الانتقال للمرحلة التالية
+                                    // Mark as not first time user and navigate to ContentView
+                                    UserDefaults.standard.set(false, forKey: "isFirstTimeUser")
+                                    showContentView = true
                                 }
                             }
                         }) {
@@ -92,6 +96,10 @@ struct story: View {
                 Spacer().frame(height: 40)
             }
         }
+        .navigationDestination(isPresented: $showContentView) {
+            ContentView()
+        }
+        .navigationBarHidden(true)
     }
 }
 

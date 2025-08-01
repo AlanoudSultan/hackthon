@@ -29,6 +29,10 @@ struct GIFView: UIViewRepresentable {
 }
 
 struct SplashScreen: View {
+    @State private var showNextScreen = false
+    @State private var isFirstTimeUser = true // You can make this dynamic based on UserDefaults
+    @ObservedObject private var gameData = GameDataManager.shared
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -41,6 +45,20 @@ struct SplashScreen: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .rotationEffect(.degrees(geometry.size.width > geometry.size.height ? 0 : 90))
         }
+        .onAppear {
+            // Wait for 3 seconds then navigate
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                showNextScreen = true
+            }
+        }
+        .navigationDestination(isPresented: $showNextScreen) {
+            if isFirstTimeUser {
+                story()
+            } else {
+                ContentView()
+            }
+        }
+        .navigationBarHidden(true)
     }
 }
 

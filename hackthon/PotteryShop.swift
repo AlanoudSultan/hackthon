@@ -31,24 +31,8 @@ struct PotteryShop: View {
                     .ignoresSafeArea()
 
                 VStack {
-                    // Top header - only current money
-                    HStack {
-                        Spacer()
-                        
-                        Text("\(gameData.currentMoney)")
-                            .foregroundColor(Color("BackgroundColor"))
-                            .font(.custom("SFArabicRounded", size: 36))
-                            .fontWeight(.heavy)
- 
-                        Image("money")
-                            .resizable()
-                            .frame(width: 60, height: 50)
-                            .padding(.trailing, 20)
-                    }
-                   // .padding(.horizontal, 20)
-                    .padding(.top, 20)
                     
-                    // Back button
+                    // Top header - only current money
                     HStack {
                         Button(action: {
                             presentationMode.wrappedValue.dismiss()
@@ -64,12 +48,23 @@ struct PotteryShop: View {
                                 )
                                 .clipShape(Circle())
                         }
+                        
                         Spacer()
+                        
+                        Text("\(gameData.currentMoney)")
+                            .foregroundColor(Color("BackgroundColor"))
+                            .font(.custom("SFArabicRounded", size: 36))
+                            .fontWeight(.heavy)
+ 
+                        Image("money")
+                            .resizable()
+                            .frame(width: 60, height: 50)
+                            .padding(.trailing, 20)
                     }
                     .padding(.horizontal, 20)
-                    //.padding(.top, 20)
+                    .padding(.top, 20)
                     
-                   // Spacer()
+                    Spacer()
                     
                     // Question box
                     VStack(spacing: 30) {
@@ -149,6 +144,19 @@ struct PotteryShop: View {
                         }
                     }
                 }
+                VStack {
+                    Image("boy")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 110)
+                        .shadow(radius: 10)
+                    
+                    
+                }
+                .padding(.leading, 500)
+                .padding(.bottom, -150)
+                
+                Spacer()
             }
         }
     }

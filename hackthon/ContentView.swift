@@ -257,7 +257,7 @@ struct ContentView: View {
                     Spacer()
                     
                     Button(action: {
-                        // Button action here
+                        // Navigate to UserStore
                     }) {
                         Text("ابدأ")
                             .foregroundColor(Color("BackgroundColor"))
