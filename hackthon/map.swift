@@ -21,13 +21,13 @@ struct map: View {
                 NavigationLink(destination: PotteryShop()) {
                     CircleButton()
                 }
-                .offset(x: -377, y: 100) // اضبط حسب موقع باب الفخار
+                .offset(x: -305, y: 99) // اضبط حسب موقع باب الفخار
 
                 // زر عند محل السجاد
                 NavigationLink(destination: CarpetShop()) {
                     CircleButton()
                 }
-                .offset(x: -140, y:100) // اضبط حسب موقع باب السجاد
+                .offset(x: -70, y:99) // اضبط حسب موقع باب السجاد
 
                 
             }
