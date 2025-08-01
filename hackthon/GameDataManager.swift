@@ -33,10 +33,10 @@ class GameDataManager: ObservableObject {
               let stagesData = try? JSONDecoder().decode(FinanceStagesData.self, from: data) else {
             // Fallback to hardcoded stages if JSON loading fails
             stages = [
-                FinanceStage(name: "مبتدئ", averageDailyIncome: 50, saving: 10, investment: 5, goal:  "ادخر حتى تصل إلى ١٠٠ قرش لتطوير الكشك الأول."),
-                FinanceStage(name: "متوسط", averageDailyIncome: 150, saving: 30, investment: 30, goal:  "ادخر حتى تصل الى ٥٠٠ قرش وقم بتوسيع الكشك وإضافة منتجات ."),
-                FinanceStage(name: "متقدم", averageDailyIncome: 300, saving: 60, investment: 90, goal:  "ادخر حتى تصل الى ١٠٠٠ قرش وامتلك متجرًا كبيرًا في السوق  ."),
-                FinanceStage(name: "تاجر" , averageDailyIncome: 600, saving: 120, investment: 240, goal: "ادخر حتى تصل الى ٢٠٠٠ قرش وامتلك متجرًا اخر في السوق")
+                FinanceStage(name: "مبتدئ", averageDailyIncome: 50, saving: 10, investment: 5, goal:  "ادخر حتى تصل إلى 100 قرش لتطوير الكشك الأول."),
+                FinanceStage(name: "متوسط", averageDailyIncome: 150, saving: 30, investment: 30, goal:  "ادخر حتى تصل الى 500 قرش وقم بتوسيع الكشك وإضافة منتجات ."),
+                FinanceStage(name: "متقدم", averageDailyIncome: 300, saving: 60, investment: 90, goal:  "ادخر حتى تصل الى 1000 قرش وامتلك متجرًا كبيرًا في السوق  ."),
+                FinanceStage(name: "تاجر" , averageDailyIncome: 600, saving: 120, investment: 240, goal: "ادخر حتى تصل الى 2000 قرش وامتلك متجرًا اخر في السوق")
             ]
             return
         }
