@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CarpetShop: View {
     @State private var selectedAnswer: Int? = nil
+    @State private var showWisdom = false
+    @State private var wisdomText = ""
     @ObservedObject private var gameData = GameDataManager.shared
     @Environment(\.presentationMode) var presentationMode
 
