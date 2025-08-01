@@ -10,11 +10,16 @@ import SwiftUI
 @main
 struct hackthonApp: App {
     @StateObject private var gameData = GameDataManager.shared
+    @StateObject private var audioManager = AudioManager.shared
     
     var body: some Scene {
         WindowGroup {
             NavigationStack {
                 SplashScreen()
+            }
+            .onAppear {
+                // Start background music when app launches
+                audioManager.startBackgroundMusic()
             }
         }
     }

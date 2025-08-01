@@ -62,6 +62,7 @@ class GameDataManager: ObservableObject {
         if isFirstTimeUser && !hasReceivedFirstTimeBonus {
             earnMoney(50)
             userDefaults.set(true, forKey: hasReceivedFirstTimeBonusKey)
+            AudioManager.shared.playBonusSound()
             print("🎁 First-time user bonus: +50 money")
         }
         
@@ -81,6 +82,7 @@ class GameDataManager: ObservableObject {
         if lastLoginDate != todayString {
             earnMoney(10)
             userDefaults.set(todayString, forKey: lastLoginDateKey)
+            AudioManager.shared.playBonusSound()
             print("💰 Daily login bonus: +10 money")
         }
     }
