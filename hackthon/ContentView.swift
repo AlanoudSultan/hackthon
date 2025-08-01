@@ -213,7 +213,7 @@ struct ContentView: View {
                             .foregroundColor(Color("secondcolor"))
                             .font(.custom("SFArabicRounded", size: 36))
                             .fontWeight(.heavy)
- 
+     
                         Image("money")
                             .resizable()
                             .frame(width: 60, height: 50)
@@ -270,6 +270,15 @@ struct ContentView: View {
                     .padding(.bottom, 20)
                     .padding(.trailing, 90)
                 }
+                
+                // Hidden NavigationLink
+                NavigationLink(
+                    destination: UserStore(),
+                    isActive: $showUserStore
+                ) {
+                    EmptyView()
+                }
+                .hidden()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .rotationEffect(.degrees(geometry.size.width > geometry.size.height ? 0 : 90))
@@ -284,12 +293,7 @@ struct ContentView: View {
                 }
             }
         )
-        .navigationDestination(isPresented: $showUserStore) {
-            UserStore()
-        }
         .navigationBarHidden(true)
-        .navigationBarBackButtonHidden(true)
-
     }
 }
 

@@ -13,7 +13,7 @@ struct hackthonApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
+            NavigationStack {
                 SplashScreen()
             }
         }

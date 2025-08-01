@@ -8,68 +8,88 @@
 import SwiftUI
 
 struct map: View {
+    @State private var showPotteryShop = false
+    @State private var showCarpetShop = false
     @ObservedObject private var gameData = GameDataManager.shared
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        NavigationView {
-            ZStack {
-                // الخلفية
-                Image("map") // تأكد إنك أضفت الصورة في Assets
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                
-                VStack {
-                    // Top header - only current money
-                    HStack {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image(systemName: "arrowshape.left.fill")
-                                .foregroundColor(Color("secondcolor"))
-                                .font(.title2)
-                                .frame(width: 40, height: 40)
-                                .background(Color("ramli"))
-                                .overlay(
-                                    Circle()
-                                        .stroke(Color("secondcolor"), lineWidth: 7)
-                                )
-                                .clipShape(Circle())
-                        }
-                        Spacer()
-                        
-                        Text("\(gameData.currentMoney)")
-                            .foregroundColor(Color("BackgroundColor"))
-                            .font(.custom("SFArabicRounded", size: 36))
-                            .fontWeight(.heavy)
- 
-                        Image("money")
-                            .resizable()
-                            .frame(width: 60, height: 50)
-                            .padding(.trailing, 10)
-                    }
-                    .padding(.horizontal, 40)
-                    .padding(.top, 30)
-                    
+        ZStack {
+            // الخلفية
+            Image("map") // تأكد إنك أضفت الصورة في Assets
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack {
+                // Top header - only current money
+                HStack {
+                    Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                                            }) {
+                                                Image(systemName: "arrowshape.left.fill")
+                                                    .foregroundColor(Color("secondcolor"))
+                                                    .font(.title2)
+                                                    .frame(width: 40, height: 40)
+                                                    .background(Color("ramli"))
+                                                    .overlay(
+                                                        Circle()
+                                                            .stroke(Color("secondcolor"), lineWidth: 7)
+                                                    )
+                                                    .clipShape(Circle())
+                                            }
+                                            Spacer()
                     Spacer()
+                    
+                    Text("\(gameData.currentMoney)")
+                        .foregroundColor(Color("BackgroundColor"))
+                        .font(.custom("SFArabicRounded", size: 36))
+                        .fontWeight(.heavy)
+ 
+                    Image("money")
+                        .resizable()
+                        .frame(width: 60, height: 50)
+                        .padding(.trailing, 10)
                 }
+                .padding(.horizontal, 40)
+                .padding(.top, 30)
                 
-                // زر عند محل الفخار
-                NavigationLink(destination: PotteryShop()) {
-                    CircleButton()
-                }
-                .offset(x: -305, y: 99) // اضبط حسب موقع باب الفخار
-
-                // زر عند محل السجاد
-                NavigationLink(destination: CarpetShop()) {
-                    CircleButton()
-                }
-                .offset(x: -70, y:99) // اضبط حسب موقع باب السجاد
-
-                
+                Spacer()
             }
-        }.navigationBarBackButtonHidden(true)
+            
+            // زر عند محل الفخار
+            Button(action: {
+                showPotteryShop = true
+            }) {
+                CircleButton()
+            }
+            .offset(x: -305, y: 99) // اضبط حسب موقع باب الفخار
 
+            // زر عند محل السجاد
+            Button(action: {
+                showCarpetShop = true
+            }) {
+                CircleButton()
+            }
+            .offset(x: -70, y:99) // اضبط حسب موقع باب السجاد
+
+            // Hidden NavigationLinks
+            NavigationLink(
+                destination: PotteryShop(showMap: $showPotteryShop),
+                isActive: $showPotteryShop
+            ) {
+                EmptyView()
+            }
+            .hidden()
+            
+            NavigationLink(
+                destination: CarpetShop(showMap: $showCarpetShop),
+                isActive: $showCarpetShop
+            ) {
+                EmptyView()
+            }
+            .hidden()
+        }
+        .navigationBarHidden(true)
     }
 }
 

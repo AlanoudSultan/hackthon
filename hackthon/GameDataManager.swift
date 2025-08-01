@@ -11,7 +11,7 @@ class GameDataManager: ObservableObject {
     static let shared = GameDataManager()
     
     @Published var currentStage: Int = 0
-    @Published var currentMoney: Int = 0
+    @Published var currentMoney: Int = 50
     @Published var totalSavings: Int = 0
     @Published var totalInvestment: Int = 0
     @Published var stages: [FinanceStage] = []
@@ -113,7 +113,7 @@ class GameDataManager: ObservableObject {
     
     func resetGame() {
         currentStage = 0
-        currentMoney = 0
+        currentMoney = 50
         totalSavings = 0
         totalInvestment = 0
         saveGameData()
