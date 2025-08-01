@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct map: View {
+    @ObservedObject private var gameData = GameDataManager.shared
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -16,6 +18,27 @@ struct map: View {
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
+                
+                VStack {
+                    // Top header - only current money
+                    HStack {
+                        Spacer()
+                        
+                        Text("\(gameData.currentMoney)")
+                            .foregroundColor(Color("BackgroundColor"))
+                            .font(.custom("SFArabicRounded", size: 36))
+                            .fontWeight(.heavy)
+ 
+                        Image("money")
+                            .resizable()
+                            .frame(width: 60, height: 50)
+                            .padding(.trailing, 10)
+                    }
+                    .padding(.horizontal, 40)
+                    .padding(.top, 30)
+                    
+                    Spacer()
+                }
                 
                 // زر عند محل الفخار
                 NavigationLink(destination: PotteryShop()) {

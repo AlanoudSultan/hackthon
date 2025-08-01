@@ -190,7 +190,13 @@ struct ContentView: View {
                                     .fontWeight(.heavy)
                             )
                             .padding(.bottom, 20)
-                        ZStack {
+                        ZStack(alignment: .leading) {
+                            // Progress rectangle (filled) on top
+                            Rectangle()
+                                .fill(Color("yellow"))
+                                .frame(width: CGFloat(gameData.currentStage + 1) / 4.0 * 100, height: 8)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            
                             // Background rectangle (unfilled)
                             Rectangle()
                                 .fill(Color.yellow.opacity(0.3 ))
@@ -198,12 +204,11 @@ struct ContentView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .frame(width: 100, height: 14)
                             
-                            // Progress rectangle (filled) on top
-                            Rectangle()
-                                .fill(Color("yellow"))
-                                .frame(width: 50, height: 6)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .padding(.trailing, 42)
+//                            // Progress rectangle (filled) on top
+//                            Rectangle()
+//                                .fill(Color("yellow"))
+//                                .frame(width: CGFloat(gameData.currentStage + 1) / 4.0 * 100, height: 8)
+//                                .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
                         .padding(.bottom, 20)
                         Spacer()
