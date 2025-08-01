@@ -161,6 +161,7 @@ struct PopupView: View {
 struct ContentView: View {
     @State private var showPopup = false
     @State private var showTargetPopup = false
+    @State private var showUserStore = false
     @ObservedObject private var gameData = GameDataManager.shared
     
     var body: some View {
@@ -181,7 +182,7 @@ struct ContentView: View {
                         
                         Image(systemName: "star.fill")
                             .foregroundColor(Color("yellow"))
-                            .font(.title)
+                            .font(.largeTitle)
                             .fontWeight(.heavy)
                             .overlay(
                                 Image(systemName: "star")
@@ -190,6 +191,7 @@ struct ContentView: View {
                                     .fontWeight(.heavy)
                             )
                             .padding(.bottom, 20)
+                        
                         ZStack(alignment: .leading) {
                             // Progress rectangle (filled) on top
                             Rectangle()
@@ -203,12 +205,6 @@ struct ContentView: View {
                                 .stroke(Color("secondcolor"), lineWidth: 8)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .frame(width: 100, height: 14)
-                            
-//                            // Progress rectangle (filled) on top
-//                            Rectangle()
-//                                .fill(Color("yellow"))
-//                                .frame(width: CGFloat(gameData.currentStage + 1) / 4.0 * 100, height: 8)
-//                                .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
                         .padding(.bottom, 20)
                         Spacer()
@@ -257,7 +253,7 @@ struct ContentView: View {
                     Spacer()
                     
                     Button(action: {
-                        // Navigate to UserStore
+                        showUserStore = true
                     }) {
                         Text("ابدأ")
                             .foregroundColor(Color("BackgroundColor"))
@@ -288,6 +284,12 @@ struct ContentView: View {
                 }
             }
         )
+        .navigationDestination(isPresented: $showUserStore) {
+            UserStore()
+        }
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+
     }
 }
 

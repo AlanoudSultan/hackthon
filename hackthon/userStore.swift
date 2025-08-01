@@ -60,7 +60,8 @@ struct UserStore: View {
                     }
                 }
             }
-        }
+        }.navigationBarBackButtonHidden(true)
+
     }
 }
 

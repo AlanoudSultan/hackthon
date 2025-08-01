@@ -158,7 +158,8 @@ struct CarpetShop: View {
                 
                 Spacer()
             }
-        }
+        }.navigationBarBackButtonHidden(true)
+
     }
 }
 

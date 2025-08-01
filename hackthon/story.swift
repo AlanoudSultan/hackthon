@@ -5,6 +5,7 @@
 //  Created by Alanoud Abaalkhail on 31/07/2025.
 //
 
+
 import SwiftUI
 
 struct story: View {
@@ -18,88 +19,91 @@ struct story: View {
     ]
 
     var body: some View {
-        ZStack {
-            // الخلفية العامة
-            Image("story_background")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        NavigationStack {
+            ZStack {
+                // الخلفية العامة
+                Image("story_background")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
 
-            VStack {
-                Spacer()
-                
-                HStack(alignment: .bottom) {
-                    // صورة الشايب
-                    VStack {
-                        Image("shayeb4")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 180)
-                            .shadow(radius: 10)
-                        
-                        
-                    }
-                    .padding(.leading, 90)
-                    .padding(.bottom, -150)
-                    
+                VStack {
                     Spacer()
                     
-                    VStack(spacing: 20) {
-                        // صندوق النص بمقاس محدد وحدود واضحة
-                        ZStack {
-                            Color.black.opacity(0.5)
-                                .frame(width: 350, height: 200)
-                                .cornerRadius(16)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color.white, lineWidth: 2)
-                                )
-                            
-                            Text(scenes[currentScene])
-                                .font(.custom("SFArabic", size: 24))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                            //.padding()
-                                .frame(width: 320, height: 230, alignment: .trailing) // لضمان عدم الخروج عن الصندوق
+                    HStack(alignment: .bottom) {
+                        // صورة الشايب
+                        VStack {
+                            Image("shayeb4")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 180)
+                                .shadow(radius: 10)
                         }
+                        .padding(.leading, 90)
+                        .padding(.bottom, -150)
                         
+                        Spacer()
                         
-                        
-                        
-                        Button(action: {
-                            withAnimation {
-                                if currentScene < scenes.count - 1 {
-                                    currentScene += 1
-                                } else {
-                                    // Mark as not first time user and navigate to ContentView
-                                    UserDefaults.standard.set(false, forKey: "isFirstTimeUser")
-                                    showContentView = true
-                                }
+                        VStack(spacing: 20) {
+                            // صندوق النص
+                            ZStack {
+                                Color.black.opacity(0.5)
+                                    .frame(width: 350, height: 200)
+                                    .cornerRadius(16)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color.white, lineWidth: 2)
+                                    )
+                                
+                                Text(scenes[currentScene])
+                                    .font(.custom("SFArabic", size: 24))
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.center)
+                                    .frame(width: 320, height: 230)
                             }
-                        }) {
-                            Text(currentScene < scenes.count - 1 ? "التالي" : "ابدأ رحلتك")
-                                .foregroundColor(Color("BackgroundColor"))
-                                .font(.custom("SFArabicRounded", size: 30))
-                                .frame(width: 230, height: 50)
-                                .background(Color("secondcolor"))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color("BackgroundColor"), lineWidth: 5)
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                            // Navigation Button
+                            Button(action: {
+                                withAnimation {
+                                    if currentScene < scenes.count - 1 {
+                                        currentScene += 1
+                                    } else {
+                                        UserDefaults.standard.set(false, forKey: "isFirstTimeUser")
+                                        showContentView = true
+                                    }
+                                }
+                            }) {
+                                Text(currentScene < scenes.count - 1 ? "التالي" : "ابدأ رحلتك")
+                                    .foregroundColor(Color("BackgroundColor"))
+                                    .font(.custom("SFArabicRounded", size: 30))
+                                    .frame(width: 230, height: 50)
+                                    .background(Color("secondcolor"))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color("BackgroundColor"), lineWidth: 5)
+                                    )
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                            }
+                            .padding(.bottom, 30)
                         }
-                        .padding(.bottom, 30)
+                        .padding(.trailing, 20)
                     }
-                    .padding(.trailing, 20)
+
+                    Spacer().frame(height: 40)
                 }
 
-                Spacer().frame(height: 40)
+                // Navigation destination trigger
+                NavigationLink(
+                    destination: ContentView(),
+                    isActive: $showContentView
+                ) {
+                    EmptyView()
+                }
             }
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
+
         }
-        .navigationDestination(isPresented: $showContentView) {
-            ContentView()
-        }
-        .navigationBarHidden(true)
     }
 }
 

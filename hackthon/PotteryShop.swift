@@ -159,6 +159,8 @@ struct PotteryShop: View {
                 Spacer()
             }
         }
+        .navigationBarBackButtonHidden(true)
+
     }
 }
 #Preview {

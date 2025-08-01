@@ -9,7 +9,7 @@ import SwiftUI
 
 struct map: View {
     @ObservedObject private var gameData = GameDataManager.shared
-    
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,6 +22,20 @@ struct map: View {
                 VStack {
                     // Top header - only current money
                     HStack {
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "arrowshape.left.fill")
+                                .foregroundColor(Color("secondcolor"))
+                                .font(.title2)
+                                .frame(width: 40, height: 40)
+                                .background(Color("ramli"))
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color("secondcolor"), lineWidth: 7)
+                                )
+                                .clipShape(Circle())
+                        }
                         Spacer()
                         
                         Text("\(gameData.currentMoney)")
@@ -54,7 +68,8 @@ struct map: View {
 
                 
             }
-        }
+        }.navigationBarBackButtonHidden(true)
+
     }
 }
 
