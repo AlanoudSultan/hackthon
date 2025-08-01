@@ -21,19 +21,15 @@ struct map: View {
                 NavigationLink(destination: PotteryShop()) {
                     CircleButton()
                 }
-                .offset(x: -130, y: 100) // اضبط حسب موقع باب الفخار
+                .offset(x: -377, y: 100) // اضبط حسب موقع باب الفخار
 
                 // زر عند محل السجاد
                 NavigationLink(destination: CarpetShop()) {
                     CircleButton()
                 }
-                .offset(x: 0, y:100) // اضبط حسب موقع باب السجاد
+                .offset(x: -140, y:100) // اضبط حسب موقع باب السجاد
 
-                // زر عند محل الأقفال
-                NavigationLink(destination: LockedShop()) {
-                    CircleButton()
-                }
-                .offset(x: 120, y: 100) // اضبط حسب موقع باب الأقفال
+                
             }
         }
     }
@@ -44,12 +40,16 @@ struct CircleButton: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(Color.white.opacity(0.8))
+                .fill(Color.background.opacity(0.8))
                 .frame(width: 50, height: 50)
                 .shadow(radius: 4)
+                .overlay(
+                    Circle()
+                        .stroke(Color("secondcolor"), lineWidth: 3)
+                )
             
             Image(systemName: "play.fill")
-                .foregroundColor(.blue)
+                .foregroundColor(.secondcolor)
                 .font(.system(size: 24))
         }
     }
