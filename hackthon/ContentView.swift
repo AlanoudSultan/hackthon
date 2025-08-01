@@ -31,7 +31,7 @@ struct ContentView: View {
                         ZStack {
                             // Background rectangle (unfilled)
                             Rectangle()
-                                .fill(Color.yellow.opacity(0.17))
+                                .fill(Color.yellow.opacity(0.178877 ))
                                 .stroke(Color("yellow"), lineWidth: 4)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .frame(width: 90, height: 12)
@@ -44,7 +44,11 @@ struct ContentView: View {
                                 .padding(.trailing, 50)
                         }
                         Spacer()
-                           
+                          
+                        Image("money")
+                            .resizable()
+                            .frame(width: 60, height: 50)
+                            .padding(.trailing, 10)
                         
                         Image(systemName: "gift.circle.fill")
                             .foregroundColor(Color("red"))
