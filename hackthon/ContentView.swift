@@ -7,6 +7,70 @@
 
 import SwiftUI
 
+struct TargetPopupView: View {
+    @Binding var isShowing: Bool
+    @ObservedObject var gameData: GameDataManager
+    
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.5)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    isShowing = false
+                }
+            
+            if let stage = gameData.getCurrentStage() {
+                VStack(spacing: 25) {
+                    Text("مرحلتك: \(stage.name)")
+                        .font(.custom("SFArabicRounded", size: 30))
+                        .foregroundColor(Color("BackgroundColor"))
+                        .fontWeight(.bold)
+
+                    Text("💰 رصيدك الابتدائي: \(gameData.currentMoney) قرش")
+                        .font(.custom("SFArabicRounded", size: 20))
+                        .foregroundColor(.white)
+                    
+                    Text("📈 دخلك اليومي: \(stage.averageDailyIncome) قرش")
+                        .font(.custom("SFArabicRounded", size: 20))
+                        .foregroundColor(.white)
+                    
+                    Text("🎯 الهدف: \(stage.goal)")
+                        .font(.custom("SFArabicRounded", size: 20))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+
+        
+                    
+                    // Close button
+                    Button(action: {
+                        isShowing = false
+                    }) {
+                        Text("حسناً")
+                            .foregroundColor(.white)
+                            .font(.custom("SFArabicRounded", size: 20))
+                            .fontWeight(.bold)
+                            .frame(width: 130, height: 35)
+                            .background(Color("secondcolor"))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.white, lineWidth: 1)
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                }
+                .padding(30)
+                .background(Color("brown"))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.yellow, lineWidth: 7)
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .padding(.horizontal, 40)
+            }
+        }
+    }
+}
+
 struct PopupView: View {
     @Binding var isShowing: Bool
     @ObservedObject var gameData: GameDataManager
@@ -71,9 +135,9 @@ struct PopupView: View {
                 }) {
                     Text("حسناً")
                         .foregroundColor(.white)
-                        .font(.custom("SFArabicRounded", size: 16))
+                        .font(.custom("SFArabicRounded", size: 20))
                         .fontWeight(.medium)
-                        .frame(width: 100, height: 35)
+                        .frame(width: 130, height: 35)
                         .background(Color("secondcolor"))
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
@@ -96,6 +160,7 @@ struct PopupView: View {
 
 struct ContentView: View {
     @State private var showPopup = false
+    @State private var showTargetPopup = false
     @ObservedObject private var gameData = GameDataManager.shared
     
     var body: some View {
@@ -110,8 +175,9 @@ struct ContentView: View {
                     HStack {
                         Text("\(gameData.currentStage + 1)")
                             .foregroundColor(Color("secondcolor"))
-                            .font(.custom("SFArabicRounded", size: 36))
+                            .font(.custom("SFRounded", size: 40))
                             .fontWeight(.heavy)
+                            .padding(.bottom, 20)
                         
                         Image(systemName: "star.fill")
                             .foregroundColor(Color("yellow"))
@@ -120,25 +186,26 @@ struct ContentView: View {
                             .overlay(
                                 Image(systemName: "star")
                                     .foregroundColor(Color("secondcolor"))
-                                    .font(.title)
+                                    .font(.largeTitle)
                                     .fontWeight(.heavy)
                             )
-                    
+                            .padding(.bottom, 20)
                         ZStack {
                             // Background rectangle (unfilled)
                             Rectangle()
-                                .fill(Color.yellow.opacity(0.178877 ))
+                                .fill(Color.yellow.opacity(0.3 ))
                                 .stroke(Color("secondcolor"), lineWidth: 8)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .frame(width: 90, height: 12)
+                                .frame(width: 100, height: 14)
                             
                             // Progress rectangle (filled) on top
                             Rectangle()
                                 .fill(Color("yellow"))
-                                .frame(width: 40, height: 7)
+                                .frame(width: 50, height: 6)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .padding(.trailing, 42)
                         }
+                        .padding(.bottom, 20)
                         Spacer()
                         
                         Text("\(gameData.currentMoney)")
@@ -166,10 +233,10 @@ struct ContentView: View {
                         .padding(.trailing, 20)
                         
                         Button(action: {
-                            // Target button action here
+                            showTargetPopup = true
                         }) {
                             Image(systemName: "target")
-                                .foregroundColor(Color("red"))
+                                .foregroundColor(Color("secondcolor"))
                                 .font(.system(size: 50))
                                 .fontWeight(.heavy)
                                 .overlay(
@@ -177,7 +244,7 @@ struct ContentView: View {
                                         .stroke(Color("BackgroundColor"), lineWidth: 3)
                                 )
                         }
-                        .padding(.trailing, 90)
+                        .padding(.trailing, 60)
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 20)
@@ -210,6 +277,9 @@ struct ContentView: View {
             Group {
                 if showPopup {
                     PopupView(isShowing: $showPopup, gameData: gameData)
+                }
+                if showTargetPopup {
+                    TargetPopupView(isShowing: $showTargetPopup, gameData: gameData)
                 }
             }
         )
