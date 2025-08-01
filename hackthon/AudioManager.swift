@@ -31,7 +31,7 @@ class AudioManager: ObservableObject {
             do {
                 backgroundMusicPlayer = try AVAudioPlayer(contentsOf: birdsURL)
                 backgroundMusicPlayer?.numberOfLoops = -1 // Loop indefinitely
-                backgroundMusicPlayer?.volume = 0.3
+                backgroundMusicPlayer?.volume = 10
             } catch {
                 print("Failed to load background music: \(error)")
             }
@@ -41,7 +41,7 @@ class AudioManager: ObservableObject {
         if let rattlingURL = Bundle.main.url(forResource: "rattling-coins-379138", withExtension: "mp3") {
             do {
                 bonusSoundPlayer = try AVAudioPlayer(contentsOf: rattlingURL)
-                bonusSoundPlayer?.volume = 0.5
+                bonusSoundPlayer?.volume = 10
             } catch {
                 print("Failed to load bonus sound: \(error)")
             }
@@ -51,7 +51,7 @@ class AudioManager: ObservableObject {
         if let spilledURL = Bundle.main.url(forResource: "spilled-coins-101296", withExtension: "mp3") {
             do {
                 answerSoundPlayer = try AVAudioPlayer(contentsOf: spilledURL)
-                answerSoundPlayer?.volume = 0.5
+                answerSoundPlayer?.volume = 10
             } catch {
                 print("Failed to load answer sound: \(error)")
             }
