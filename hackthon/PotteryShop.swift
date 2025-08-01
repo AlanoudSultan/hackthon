@@ -4,23 +4,32 @@
 //
 //  Created by حصه العجالين on 07/02/1447 AH.
 //
-
 import SwiftUI
 
 struct PotteryShop: View {
     @State private var selectedAnswer: Int? = nil
-    @ObservedObject private var gameData = GameDataManager.shared
+    @State private var showWisdom = false
+    @State private var wisdomText = ""
+    @ObservedObject var gameData = GameDataManager.shared
     @Environment(\.presentationMode) var presentationMode
+
+    let question = "مرحبًا بك في محل الفخار!\nلدينا العديد من العروض، اختر ما يناسبك:"
     
+    // النص + السعر + التعليق من شيخ الحكمة
+    let answers: [(text: String, cost: Int, wisdom: String)] = [
+        ("قطعة فخار واحدة", 7, "شراء واحد بس؟ فكر كيف تزيد الكمية وتكسب أكثر."),
+        ("قطعتي فخار", 10, "خيار جيد لكن بإمكانك اختيار عرض أفضل."),
+        ("٤ قطع فخار", 12, "ذكي جدًا! وفّرت واشتريت كمية ممتازة 👏")
+    ]
+
     var body: some View {
         NavigationView {
             ZStack {
-                // الخلفية
                 Image("pottery")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
-                
+
                 VStack {
                     // Top header - only current money
                     HStack {
@@ -64,12 +73,13 @@ struct PotteryShop: View {
                     
                     // Question box
                     VStack(spacing: 30) {
-                        Text("سؤال")
+                        Text(question)
                             .foregroundColor(.white)
-                            .font(.custom("SFArabicRounded", size: 30))
+                            .font(.custom("SFArabicRounded", size: 22))
+                            .multilineTextAlignment(.center)
                             .fontWeight(.bold)
+                            .padding()
                             .frame(maxWidth: 600)
-                            .frame(height: 60)
                             .background(Color("brown"))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
@@ -77,37 +87,72 @@ struct PotteryShop: View {
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .padding(.horizontal, 40)
-                        
-                        // Answer options
+
+                        // الإجابات أفقية
                         HStack(spacing: 15) {
-                            ForEach(0..<3, id: \.self) { index in
+                            ForEach(0..<answers.count, id: \.self) { index in
+                                let answer = answers[index]
+
                                 Button(action: {
-                                    selectedAnswer = index
+                                    if gameData.currentMoney >= answer.cost {
+                                        gameData.earnMoney(-answer.cost)
+                                        selectedAnswer = index
+                                        wisdomText = answer.wisdom
+                                    } else {
+                                        wisdomText = "⚠️ لا تملك رصيدًا كافيًا لهذا الخيار!"
+                                    }
+                                    showWisdom = true
                                 }) {
-                                    Text("جواب")
-                                        .foregroundColor(.white)
-                                        .font(.custom("SFArabicRounded", size: 30))
-                                        .fontWeight(.medium)
-                                        .frame(width: 190, height: 100)
-                                        .background(Color("secondcolor"))
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .stroke(selectedAnswer == index ? Color.yellow : Color.yellow.opacity(0.3), lineWidth: selectedAnswer == index ? 7 : 1)
-                                        )
-                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    VStack(spacing: 10) {
+                                        Text(answer.text)
+                                            .multilineTextAlignment(.center)
+                                            .font(.custom("SFArabicRounded", size: 18))
+                                        Text("💰 \(answer.cost) قرش")
+                                            .font(.caption)
+                                            .foregroundColor(.yellow)
+                                    }
+                                    .foregroundColor(.white)
+                                    .frame(width: 120, height: 100)
+                                    .background(Color("secondcolor"))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(selectedAnswer == index ? Color.yellow : Color.yellow.opacity(0.3), lineWidth: selectedAnswer == index ? 7 : 1)
+                                    )
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
                                 }
                             }
                         }
                         .padding(.horizontal, 40)
                     }
-                    
+
                     Spacer()
+                }
+
+                // حكمة شيخ المال
+                if showWisdom {
+                    VStack {
+                        Spacer()
+                        Text("👴 شيخ الحكمة:\n\(wisdomText)")
+                            .multilineTextAlignment(.center)
+                            .font(.custom("SFArabicRounded", size: 20))
+                            .foregroundColor(Color("red"))
+                            .padding()
+                            .background(Color("BackgroundColor").opacity(0.95))
+                            .cornerRadius(12)
+                            .padding()
+                        Spacer()
+                    }
+                    .transition(.opacity)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            showWisdom = false
+                        }
+                    }
                 }
             }
         }
     }
 }
-
 #Preview {
     PotteryShop()
 }
