@@ -25,48 +25,69 @@ struct story: View {
 
             VStack {
                 Spacer()
-
-                // صندوق النص بمقاس محدد وحدود واضحة
-                ZStack {
-                    Color.black.opacity(0.5)
-                        .frame(width: 350, height: 200)
-                        .cornerRadius(16)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.white, lineWidth: 2)
-                        )
-
-                    Text(scenes[currentScene])
-                        .font(.custom("SFArabic", size: 24))
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        //.padding()
-                        .frame(width: 320, height: 230, alignment: .trailing) // لضمان عدم الخروج عن الصندوق
-                }
-
-               Spacer()
-
-                Button(action: {
-                    withAnimation {
-                        if currentScene < scenes.count - 1 {
-                            currentScene += 1
-                        } else {
-                            // الانتقال للمرحلة التالية
-                        }
+                
+                HStack(alignment: .bottom) {
+                    // صورة الشايب
+                    VStack {
+                        Image("shayeb4")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 180)
+                            .shadow(radius: 10)
+                        
+                        
                     }
-                }) {
-                    Text(currentScene < scenes.count - 1 ? "التالي" : "ابدأ رحلتك")
-                        .foregroundColor(Color("BackgroundColor"))
-                        .font(.custom("SFArabicRounded", size: 30))
-                        .frame(width: 230, height: 50)
-                        .background(Color("secondcolor"))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color("BackgroundColor"), lineWidth: 5)
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .padding(.leading, 90)
+                    .padding(.bottom, -150)
+                    
+                    Spacer()
+                    
+                    VStack(spacing: 20) {
+                        // صندوق النص بمقاس محدد وحدود واضحة
+                        ZStack {
+                            Color.black.opacity(0.5)
+                                .frame(width: 350, height: 200)
+                                .cornerRadius(16)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Color.white, lineWidth: 2)
+                                )
+                            
+                            Text(scenes[currentScene])
+                                .font(.custom("SFArabic", size: 24))
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.center)
+                            //.padding()
+                                .frame(width: 320, height: 230, alignment: .trailing) // لضمان عدم الخروج عن الصندوق
+                        }
+                        
+                        
+                        
+                        
+                        Button(action: {
+                            withAnimation {
+                                if currentScene < scenes.count - 1 {
+                                    currentScene += 1
+                                } else {
+                                    // الانتقال للمرحلة التالية
+                                }
+                            }
+                        }) {
+                            Text(currentScene < scenes.count - 1 ? "التالي" : "ابدأ رحلتك")
+                                .foregroundColor(Color("BackgroundColor"))
+                                .font(.custom("SFArabicRounded", size: 30))
+                                .frame(width: 230, height: 50)
+                                .background(Color("secondcolor"))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color("BackgroundColor"), lineWidth: 5)
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        }
+                        .padding(.bottom, 30)
+                    }
+                    .padding(.trailing, 20)
                 }
-                .padding(.bottom, 30)
 
                 Spacer().frame(height: 40)
             }
