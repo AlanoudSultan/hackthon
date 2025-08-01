@@ -27,7 +27,22 @@ class GameDataManager: ObservableObject {
     private init() {
         loadStages()
         loadGameData()
-        checkAndGiveBonuses()
+    }
+    
+    // Public method to check and give bonuses - called from ContentView
+    func checkAndGiveBonusesIfNeeded() {
+        let isFirstTimeUser = userDefaults.bool(forKey: "isFirstTimeUser") == false
+        let hasReceivedFirstTimeBonus = userDefaults.bool(forKey: hasReceivedFirstTimeBonusKey)
+        
+        // Give first-time user bonus (50 money)
+        if isFirstTimeUser && !hasReceivedFirstTimeBonus {
+            earnMoney(50)
+            userDefaults.set(true, forKey: hasReceivedFirstTimeBonusKey)
+            print("🎁 First-time user bonus: +50 money")
+        }
+        
+        // Check daily login bonus (10 money)
+        checkDailyLoginBonus()
     }
     
     private func loadStages() {
@@ -54,22 +69,6 @@ class GameDataManager: ObservableObject {
         objectWillChange.send()
     }
     
-    private func checkAndGiveBonuses() {
-        let isFirstTimeUser = userDefaults.bool(forKey: "isFirstTimeUser") == false
-        let hasReceivedFirstTimeBonus = userDefaults.bool(forKey: hasReceivedFirstTimeBonusKey)
-        
-        // Give first-time user bonus (50 money)
-        if isFirstTimeUser && !hasReceivedFirstTimeBonus {
-            earnMoney(50)
-            userDefaults.set(true, forKey: hasReceivedFirstTimeBonusKey)
-            AudioManager.shared.playBonusSound()
-            print("🎁 First-time user bonus: +50 money")
-        }
-        
-        // Check daily login bonus (10 money)
-        checkDailyLoginBonus()
-    }
-    
     private func checkDailyLoginBonus() {
         let today = Date()
         let dateFormatter = DateFormatter()
@@ -82,7 +81,6 @@ class GameDataManager: ObservableObject {
         if lastLoginDate != todayString {
             earnMoney(10)
             userDefaults.set(todayString, forKey: lastLoginDateKey)
-            AudioManager.shared.playBonusSound()
             print("💰 Daily login bonus: +10 money")
         }
     }

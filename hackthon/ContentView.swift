@@ -294,6 +294,37 @@ struct ContentView: View {
             }
         )
         .navigationBarHidden(true)
+        .onAppear {
+            // Check if user has a bonus and play sound if they do
+            checkAndPlayBonusSound()
+        }
+    }
+    
+    private func checkAndPlayBonusSound() {
+        let userDefaults = UserDefaults.standard
+        let isFirstTimeUser = userDefaults.bool(forKey: "isFirstTimeUser") == false
+        let hasReceivedFirstTimeBonus = userDefaults.bool(forKey: "hasReceivedFirstTimeBonus")
+        
+        // Check if first-time user hasn't received bonus yet
+        if isFirstTimeUser && !hasReceivedFirstTimeBonus {
+            // Give bonus and play sound
+            gameData.checkAndGiveBonusesIfNeeded()
+            AudioManager.shared.playBonusSound()
+            return
+        }
+        
+        // Check if daily bonus should be given
+        let today = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let todayString = dateFormatter.string(from: today)
+        let lastLoginDate = userDefaults.string(forKey: "lastLoginDate")
+        
+        if lastLoginDate != todayString {
+            // Give bonus and play sound
+            gameData.checkAndGiveBonusesIfNeeded()
+            AudioManager.shared.playBonusSound()
+        }
     }
 }
 

@@ -21,6 +21,14 @@ struct hackthonApp: App {
                 // Start background music when app launches
                 audioManager.startBackgroundMusic()
             }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                // Stop background music when app goes to background
+                audioManager.stopBackgroundMusic()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
+                // Stop background music when app terminates
+                audioManager.stopBackgroundMusic()
+            }
         }
     }
 }

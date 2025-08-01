@@ -24,7 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8E4D83802E3A787100FBA4C2 /* hackthon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hackthon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E4D83802E3A787100FBA4C2 /* القرش الأبيض.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "القرش الأبيض.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4D838D2E3A787200FBA4C2 /* hackthonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hackthonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4D83972E3A787200FBA4C2 /* hackthonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hackthonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -85,7 +85,7 @@
 		8E4D83812E3A787100FBA4C2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8E4D83802E3A787100FBA4C2 /* hackthon.app */,
+				8E4D83802E3A787100FBA4C2 /* القرش الأبيض.app */,
 				8E4D838D2E3A787200FBA4C2 /* hackthonTests.xctest */,
 				8E4D83972E3A787200FBA4C2 /* hackthonUITests.xctest */,
 			);
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8E4D837F2E3A787100FBA4C2 /* hackthon */ = {
+		8E4D837F2E3A787100FBA4C2 /* القرش الأبيض */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8E4D83A12E3A787200FBA4C2 /* Build configuration list for PBXNativeTarget "hackthon" */;
+			buildConfigurationList = 8E4D83A12E3A787200FBA4C2 /* Build configuration list for PBXNativeTarget "القرش الأبيض" */;
 			buildPhases = (
 				8E4D837C2E3A787100FBA4C2 /* Sources */,
 				8E4D837D2E3A787100FBA4C2 /* Frameworks */,
@@ -110,11 +110,11 @@
 			fileSystemSynchronizedGroups = (
 				8E4D83822E3A787100FBA4C2 /* hackthon */,
 			);
-			name = hackthon;
+			name = "القرش الأبيض";
 			packageProductDependencies = (
 			);
 			productName = hackthon;
-			productReference = 8E4D83802E3A787100FBA4C2 /* hackthon.app */;
+			productReference = 8E4D83802E3A787100FBA4C2 /* القرش الأبيض.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8E4D838C2E3A787200FBA4C2 /* hackthonTests */ = {
@@ -200,7 +200,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8E4D837F2E3A787100FBA4C2 /* hackthon */,
+				8E4D837F2E3A787100FBA4C2 /* القرش الأبيض */,
 				8E4D838C2E3A787200FBA4C2 /* hackthonTests */,
 				8E4D83962E3A787200FBA4C2 /* hackthonUITests */,
 			);
@@ -258,12 +258,12 @@
 /* Begin PBXTargetDependency section */
 		8E4D838F2E3A787200FBA4C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8E4D837F2E3A787100FBA4C2 /* hackthon */;
+			target = 8E4D837F2E3A787100FBA4C2 /* القرش الأبيض */;
 			targetProxy = 8E4D838E2E3A787200FBA4C2 /* PBXContainerItemProxy */;
 		};
 		8E4D83992E3A787200FBA4C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8E4D837F2E3A787100FBA4C2 /* hackthon */;
+			target = 8E4D837F2E3A787100FBA4C2 /* القرش الأبيض */;
 			targetProxy = 8E4D83982E3A787200FBA4C2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -536,7 +536,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8E4D83A12E3A787200FBA4C2 /* Build configuration list for PBXNativeTarget "hackthon" */ = {
+		8E4D83A12E3A787200FBA4C2 /* Build configuration list for PBXNativeTarget "القرش الأبيض" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8E4D83A22E3A787200FBA4C2 /* Debug */,
