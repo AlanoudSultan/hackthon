@@ -34,20 +34,21 @@ struct CarpetShop: View {
                 // Top header - only current money
                 HStack {
                     Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                                            }) {
-                                                Image(systemName: "arrowshape.left.fill")
-                                                    .foregroundColor(Color("secondcolor"))
-                                                    .font(.title2)
-                                                    .frame(width: 40, height: 40)
-                                                    .background(Color("ramli"))
-                                                    .overlay(
-                                                        Circle()
-                                                            .stroke(Color("secondcolor"), lineWidth: 7)
-                                                    )
-                                                    .clipShape(Circle())
-                                            }
-                                            Spacer()
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "arrowshape.left.fill")
+                            .foregroundColor(Color("secondcolor"))
+                            .font(.title2)
+                            .frame(width: 40, height: 40)
+                            .background(Color("ramli"))
+                            .overlay(
+                                Circle()
+                                    .stroke(Color("secondcolor"), lineWidth: 7)
+                            )
+                            .clipShape(Circle())
+                    }
+                    
+                    Spacer()
                     
                     Text("\(gameData.currentMoney)")
                         .foregroundColor(Color("BackgroundColor"))
@@ -87,6 +88,9 @@ struct CarpetShop: View {
                             let answer = answers[index]
 
                             Button(action: {
+                                // Play answer sound
+                                AudioManager.shared.playAnswerSound()
+                                
                                 if gameData.currentMoney >= answer.cost {
                                     gameData.earnMoney(-answer.cost)
                                     selectedAnswer = index
