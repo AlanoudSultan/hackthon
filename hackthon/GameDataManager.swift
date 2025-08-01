@@ -21,10 +21,13 @@ class GameDataManager: ObservableObject {
     private let currentMoneyKey = "currentMoney"
     private let totalSavingsKey = "totalSavings"
     private let totalInvestmentKey = "totalInvestment"
+    private let lastLoginDateKey = "lastLoginDate"
+    private let hasReceivedFirstTimeBonusKey = "hasReceivedFirstTimeBonus"
     
     private init() {
         loadStages()
         loadGameData()
+        checkAndGiveBonuses()
     }
     
     private func loadStages() {
@@ -49,6 +52,37 @@ class GameDataManager: ObservableObject {
         totalSavings = userDefaults.integer(forKey: totalSavingsKey)
         totalInvestment = userDefaults.integer(forKey: totalInvestmentKey)
         objectWillChange.send()
+    }
+    
+    private func checkAndGiveBonuses() {
+        let isFirstTimeUser = userDefaults.bool(forKey: "isFirstTimeUser") == false
+        let hasReceivedFirstTimeBonus = userDefaults.bool(forKey: hasReceivedFirstTimeBonusKey)
+        
+        // Give first-time user bonus (50 money)
+        if isFirstTimeUser && !hasReceivedFirstTimeBonus {
+            earnMoney(50)
+            userDefaults.set(true, forKey: hasReceivedFirstTimeBonusKey)
+            print("🎁 First-time user bonus: +50 money")
+        }
+        
+        // Check daily login bonus (10 money)
+        checkDailyLoginBonus()
+    }
+    
+    private func checkDailyLoginBonus() {
+        let today = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let todayString = dateFormatter.string(from: today)
+        
+        let lastLoginDate = userDefaults.string(forKey: lastLoginDateKey)
+        
+        // If it's a new day, give the daily bonus
+        if lastLoginDate != todayString {
+            earnMoney(10)
+            userDefaults.set(todayString, forKey: lastLoginDateKey)
+            print("💰 Daily login bonus: +10 money")
+        }
     }
     
     func saveGameData() {
@@ -116,6 +150,8 @@ class GameDataManager: ObservableObject {
         currentMoney = 50
         totalSavings = 0
         totalInvestment = 0
+        userDefaults.removeObject(forKey: hasReceivedFirstTimeBonusKey)
+        userDefaults.removeObject(forKey: lastLoginDateKey)
         saveGameData()
         objectWillChange.send()
     }
